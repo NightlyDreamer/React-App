@@ -6,14 +6,20 @@ import SearchPanel from './components/search-panel';
 import TodoList from './components/todo-list';
 
 const App = () => {
-    
-    return (
-        <div>
-            <Header />
-            <SearchPanel />
-            <TodoList />
-        </div>
-    );
+	
+	const todoData = [
+		{ label: 'React Redux', important: true },
+		{ label: 'React Router', important: false },
+		{ label: 'React', important: true },
+	];
+
+	return (
+		<div>
+			<Header />
+			<SearchPanel />
+			<TodoList todos={todoData}/>
+		</div>
+	);
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
