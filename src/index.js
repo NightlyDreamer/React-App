@@ -21,11 +21,15 @@ const TodoList = () => {
         </ul>
     );
 ;}
+
 const App = () => {
     return (
         <div>
-
+            <Header />
+            <SearchPanel />
+            <TodoList />
         </div>
     );
-}
+};
+
 ReactDOM.render(<App />, document.getElementById('root'));
