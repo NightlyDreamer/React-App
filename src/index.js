@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Header from './components/header';
 import SearchPanel from './components/search-panel';
 import TodoList from './components/todo-list';
+import './index.css';
 
 const App = () => {
 	// Используем массив todoData для хранения параметров (li) в виде оббектов вместо БД 
@@ -14,7 +15,7 @@ const App = () => {
 	];
 
 	return (
-		<div>
+		<div className="app">
 			<Header />
 			<SearchPanel />
 			<TodoList todos={todoData}/> {/* Передаем свойства детям как атрибуты */} 
