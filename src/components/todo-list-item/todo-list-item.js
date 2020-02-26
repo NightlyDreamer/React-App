@@ -2,30 +2,29 @@ import React, { Component } from 'react';
 import './todo-list-item.css';
 export default class TodoListItem extends Component {// деструктуририуем (props) полученые свойства(label, important) передаем как параметры в TodoListItem  
   
-  state = {
-    done: false,
-    important: false
-  };
+  // state = {
+  //   done: false,
+  //   important: false
+  // };
 
-  onLabelClick = () => {
-    this.setState(({done}) => {
-      return {
-        done: !done
-      };
-    });
-  };
+  // onLabelClick = () => {
+  //   this.setState(({done}) => {
+  //     return {
+  //       done: !done
+  //     };
+  //   });
+  // };
 
-  onImportantClick = () => {
-    this.setState(({ important }) => {
-      return {
-        important: !important
-      };
-    });
-  };
+  // onImportantClick = () => {
+  //   this.setState(({ important }) => {
+  //     return {
+  //       important: !important
+  //     };
+  //   });
+  // };
 
   render () {
-    const { label, onDelete } = this.props;
-    const { done, important } = this.state;
+    const { label, done, important, onDoneChanged, onImportantChanged, onDelete } = this.props;
 
     let classNames = 'todo-list-item';
 
@@ -40,13 +39,13 @@ export default class TodoListItem extends Component {// деструктурир
       <div className={classNames}>
         <span
           className="todo-list-item-label"
-          onClick={ this.onLabelClick }>
+          onClick={ onDoneChanged }>
           { label }
         </span>
         <span>
           <button 
             type="button" className="btn btn-outline-success btn-sm"
-            onClick={ this.onImportantClick }>
+            onClick={ onImportantChanged }>
               <i className="fa fa-exclamation" />
           </button>
           <button 
