@@ -1,5 +1,5 @@
 import React from 'react';
-import StausItemFilter from './status-item-filter'
+import StausItemFilter from '../status-item-filter';
 import './search-panel.css';
 
 
