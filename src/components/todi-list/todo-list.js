@@ -3,7 +3,7 @@ import React from 'react';
 import TodoListItem from '../todo-list-item';
 import './todo-list.css'
 
-const TodoList = ({ todos }) => { //деструктурируем обьект (props) и достаем свойства 
+const TodoList = ({ todos, onDeleted }) => { //деструктурируем обьект (props) и достаем свойства 
 	// В данном случае это ( todos ) переданый из index.js (<App>)
 
 	const elements = todos.map((item) => {
@@ -13,7 +13,9 @@ const TodoList = ({ todos }) => { //деструктурируем обьект 
 
 		return (// для каждого елемента(обьекта) масива item создаем  JSX код
 			<li className="list-group-item" key={id}>
-				<TodoListItem { ...items}/> 
+				<TodoListItem 
+				onDelete={ () => onDeleted(id) }
+				{ ...items}/> 
 			</li>
 		);
 	});

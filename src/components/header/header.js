@@ -1,11 +1,11 @@
 import React from 'react';
 import './header.css';
 
-const Header = () => {
+const Header = ({ toDo, done }) => {
   return (
 		<div className="header d-flex">
 			<h1>Todo List</h1>
-			<h2>1 more todo, 3 done</h2>
+  			<h2>{toDo} more todo, {done} done</h2>
 		</div>
 	);
 };
