@@ -13,11 +13,14 @@ export default class App extends Component {
 	maxID = 100;
 	state = {
 		todoData: [
-			this.createTodoItem('React Redux'),
-			this.createTodoItem('React Router'), 
-			this.createTodoItem('React')
+			this.createTodoItem('Test 1'),
+			this.createTodoItem('Test 2'),
+			this.createTodoItem('Test 3'),
+			this.createTodoItem('Test 4'),
+			this.createTodoItem('Test 5')
 		],
-		term: ''
+		term: '',
+		filter: 'all'
 	};
 
 	createTodoItem(label) {
@@ -100,20 +103,49 @@ export default class App extends Component {
 		this.setState( {term} );
 	};
 
-	render() {
-		const {todoData, term} = this.state;
+	filter = (items, filter) => {
+		switch(filter){
+			case 'all': 
+				return items;
 
-		const visiblItems = this.search(todoData, term);
+			case 'active': 
+				return items.filter( (item) => {
+					return item.done === false;
+				});
+
+			case 'done':
+				return items.filter( (item) => {
+					return item.done === true;
+				});
+
+			default: 
+				return items;
+		};
+	};
+	
+	onFilterClick = (filter) => {
+		this.setState( {filter} );
+	};
+
+	render() {
+		const {todoData, term, filter} = this.state;
+
+		const visiblItems = this.filter(this.search(todoData, term), filter);
 
 		const doneCount = todoData.filter(e => e.done).length;
 		const todoCount = todoData.length - doneCount;
 
 		return (
 			<div className="app">
-				<Header toDo={todoCount} done={doneCount} />
+				<Header 
+					toDo={todoCount} 
+					done={doneCount} />
 				<div className="input-group mb-3">
-					<SearchPanel onSearch={this.onSearch} />
-					<StatusItemFilter />
+					<SearchPanel 
+						onSearch={this.onSearch} />
+					<StatusItemFilter 
+						onFilterClick={this.onFilterClick}
+						filter={filter} />
 				</div>
 				<TodoList
 					todos={visiblItems}
