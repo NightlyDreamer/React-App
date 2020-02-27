@@ -59,45 +59,39 @@ export default class App extends Component {
 		});
 	};
 
+	toggleProperty(arr, id, propName){
+		const idx = arr.findIndex(e => e.id === id);
+		const oldItem = arr[idx]
+		const newItem ={...oldItem, [propName]: !oldItem[propName]};
+		return [
+				...arr.slice(0, idx),
+				newItem,
+				...arr.slice(idx + 1)
+		];
+	};
+
 	done = (id) => {
 		this.setState(({todoData}) => {
-			const idx = todoData.findIndex(e => e.id === id);
-			const oldItem = todoData[idx]
-			const newItem ={...oldItem, done: !oldItem.done}
-			const newArr = [
-				...todoData.slice(0, idx),
-				newItem,
-				...todoData.slice(idx + 1)
-			];
-
 			return {
-				todoData: newArr
+				todoData: this.toggleProperty(todoData, id, 'done')
 			};
 		});
 	};
 
 	important = (id) => {
 		this.setState(({todoData}) => {
-			const idx = todoData.findIndex(e => e.id === id);
-			const oldItem = todoData[idx]
-			const newItem ={...oldItem, important: !oldItem.important}
-
-			const newArr = [
-				...todoData.slice(0, idx),
-				newItem,
-				...todoData.slice(idx + 1)
-			];
-
 			return {
-				todoData: newArr
+				todoData: this.toggleProperty(todoData, id, 'important')
 			};
 		});
 	};
 
 	render() {
-		const doneCount = this.state.todoData.filter(e => e.done).length;
-		const todoCount = this.state.todoData.length - doneCount;
-		
+		const {todoData} =this.state;
+
+		const doneCount = todoData.filter(e => e.done).length;
+		const todoCount = todoData.length - doneCount;
+
 		return (
 			<div className="app">
 				<Header toDo={todoCount} done={doneCount} />
@@ -106,7 +100,7 @@ export default class App extends Component {
 					<StatusItemFilter />
 				</div>
 				<TodoList
-					todos={this.state.todoData}
+					todos={todoData}
 					onDeleted={ this.deleteItem }
 					onDone={ this.done }
 					onImoprtant={ this.important }
