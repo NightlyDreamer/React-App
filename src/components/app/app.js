@@ -14,9 +14,10 @@ export default class App extends Component {
 	state = {
 		todoData: [
 			this.createTodoItem('React Redux'),
-			this.createTodoItem('React Router'),
+			this.createTodoItem('React Router'), 
 			this.createTodoItem('React')
-		]
+		],
+		term: ''
 	};
 
 	createTodoItem(label) {
@@ -86,8 +87,23 @@ export default class App extends Component {
 		});
 	};
 
+	search = (items, term) => {
+		if(term.length === 0){
+			return items;
+		}
+		return items.filter( (item) => {
+			return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+		});
+	};
+
+	onSearch = (term) => {
+		this.setState( {term} );
+	};
+
 	render() {
-		const {todoData} =this.state;
+		const {todoData, term} = this.state;
+
+		const visiblItems = this.search(todoData, term);
 
 		const doneCount = todoData.filter(e => e.done).length;
 		const todoCount = todoData.length - doneCount;
@@ -96,15 +112,15 @@ export default class App extends Component {
 			<div className="app">
 				<Header toDo={todoCount} done={doneCount} />
 				<div className="input-group mb-3">
-					<SearchPanel />
+					<SearchPanel onSearch={this.onSearch} />
 					<StatusItemFilter />
 				</div>
 				<TodoList
-					todos={todoData}
+					todos={visiblItems}
 					onDeleted={ this.deleteItem }
 					onDone={ this.done }
 					onImoprtant={ this.important }
-				/> 
+				/>
 				<AddItem onAdd={ this.addItem }/>
 			</div>
 		);
